@@ -33,7 +33,7 @@ class CompaniesController extends Controller
             })->save($path, 100);
         }
 
-        Company::create($request->validated() + ['logo' => $file_name]);
+        Company::create(array_merge($request->validated(), ['logo' => $file_name]));
 
         return redirect()->route('companies.index')->with([
             'message' => 'Created successfully',
@@ -65,7 +65,7 @@ class CompaniesController extends Controller
             })->save($path, 100);
         }
 
-        $company->update($request->validated());
+        $company->update(array_merge($request->validated(), ['logo' => $file_name]));
 
         return redirect()->route('companies.index')->with([
             'message' => 'Updated successfully',

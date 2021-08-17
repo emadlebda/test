@@ -5,9 +5,9 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i>
-                    All Companies
+                    All Employees
                     <div class="float-right">
-                        <a href="{{route('companies.create')}}" class="btn btn-primary">Create New</a>
+                        <a href="{{route('employees.create')}}" class="btn btn-primary">Create New</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -15,49 +15,47 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Logo</th>
                             <th>Name</th>
-                            <th>Employees</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Website</th>
+                            <th>Company</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($companies as $company)
+                        @forelse($employees as $employee)
                             <tr>
-                                <td>{{$company->id}}</td>
+                                <td>{{$employee->id}}</td>
+                                <td>{{$employee->full_name}}</td>
+                                <td>{{$employee->email}}</td>
+                                <td>{{$employee->phone}}</td>
                                 <td>
-                                    <img src="{{ asset('storage/companies/'.$company->logo) }}/">
+                                    <a href="{{route('companies.show',$employee->company->id)}}">
+                                        {{$employee->company->name}}
+                                    </a>
                                 </td>
-                                <td>{{$company->name}}</td>
-                                <td>{{$company->employees_count}}</td>
-                                <td>{{$company->email}}</td>
-                                <td>{{$company->phone}}</td>
-                                <td>{{$company->website}}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('companies.show', $company->id) }}"
+                                        <a href="{{ route('employees.show', $employee->id) }}"
                                            class="btn btn-dark">
                                             <i class="fa fa-edit"></i>
                                             View
                                         </a>
-                                        <a href="{{ route('companies.edit', $company->id) }}"
+                                        <a href="{{ route('employees.edit', $employee->id) }}"
                                            class="btn btn-primary">
                                             <i class="fa fa-edit"></i>
                                             Edit
                                         </a>
                                         <a href="javascript:void(0);"
-                                           onclick="if (confirm('Are you sure to delete this record?')) { document.getElementById('delete-company-{{ $company->id }}').submit(); } else { return false; }"
+                                           onclick="if (confirm('Are you sure to delete this record?')) { document.getElementById('delete-company-{{ $employee->id }}').submit(); } else { return false; }"
                                            class="btn btn-danger">
                                             <i class="fa fa-trash"></i>
                                             Delete
                                         </a>
                                     </div>
-                                    <form action="{{ route('companies.destroy', $company->id) }}"
+                                    <form action="{{ route('employees.destroy', $employee->id) }}"
                                           method="post"
-                                          id="delete-company-{{ $company->id }}" class="d-none">
+                                          id="delete-company-{{ $employee->id }}" class="d-none">
                                         @csrf
                                         @method('DELETE')
                                     </form>
@@ -65,11 +63,11 @@
                             </tr>
                         @empty
                             <tr>
-                                No companies !
+                                No employees !
                             </tr>
                         @endforelse
                         </tbody>
-                        {{$companies->links()}}
+                        {{$employees->links()}}
                     </table>
                 </div>
             </div>
